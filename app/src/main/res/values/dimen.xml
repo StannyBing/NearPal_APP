@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="text_biger_size">18sp</dimen>
+  <dimen name="text_big_size">16sp</dimen>
+  <dimen name="text_normal_size">14sp</dimen>
+  <dimen name="text_small_size">12sp</dimen>
+  <dimen name="text_smaller_size">10sp</dimen>
+  <dimen name="login_way_size">45dp</dimen>
+  <dimen name="normal_icon_size">40dp</dimen>
+</resources>

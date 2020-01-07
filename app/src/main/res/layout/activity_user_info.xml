@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_userinfo_close"
+            android:layout_width="@dimen/normal_icon_size"
+            android:layout_height="@dimen/normal_icon_size"
+            android:layout_margin="5dp"
+            android:background="@drawable/close" />
+
+        <com.stanny.nearpal.base.TypeTextView
+            android:id="@+id/ttv_userinfo_next"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="完成"
+            android:textColor="@color/letter_blue"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <ImageView
+            android:id="@+id/iv_userinfo_headicon"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/headicon_bg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="头像"
+            android:textColor="@color/default_text_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <EditText
+            android:id="@+id/et_userinfo_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/shape_edit_normal"
+            android:hint="昵称(必填)"
+            android:paddingLeft="20dp"
+            android:singleLine="true"
+            android:textColor="@color/default_text_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <TextView
+            android:id="@+id/tv_userinfo_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_edit_normal"
+            android:gravity="center_vertical"
+            android:hint="生日"
+            android:paddingLeft="20dp"
+            android:singleLine="true"
+            android:textColor="@color/default_text_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <TextView
+            android:id="@+id/tv_userinfo_sex"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_edit_normal"
+            android:gravity="center_vertical"
+            android:hint="性别"
+            android:paddingLeft="20dp"
+            android:singleLine="true"
+            android:textColor="@color/default_text_color"
+            android:textSize="@dimen/text_normal_size" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_splash_icon"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/headicon_bg"/>
+
+    <TextView
+        android:id="@+id/tv_splash_preface"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:lineSpacingExtra="6dp"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
+        android:text="你好，陌生人\n今日阳光很好，我也很好\n希望你也是"
+        android:textSize="15sp"/>
+
+</RelativeLayout>

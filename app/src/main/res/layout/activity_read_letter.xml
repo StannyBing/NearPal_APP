@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_read_letter_close"
+            android:layout_width="@dimen/normal_icon_size"
+            android:layout_height="@dimen/normal_icon_size"
+            android:layout_margin="5dp"
+            android:background="@drawable/close" />
+
+
+        <ImageView
+            android:id="@+id/iv_read_letter_headicon1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="5dp"
+            android:alpha="0.0"
+            android:background="@drawable/headicon_bg" />
+
+        <com.stanny.nearpal.base.TypeTextView
+            android:id="@+id/ttv_read_write"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="书"
+            android:textColor="@color/letter_blue"
+            android:textSize="25sp" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/sv_read_letter_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="30dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="致："
+                    android:textSize="@dimen/text_normal_size" />
+
+                <TextView
+                    android:id="@+id/tv_letter_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.3"
+                    android:text="远方的你"
+                    android:textSize="@dimen/text_normal_size" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/iv_read_letter_headicon2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/headicon_bg" />
+
+                <TextView
+                    android:id="@+id/tv_read_letter_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我是一阵风"
+                    android:textColor="@color/letter_blue"
+                    android:textSize="@dimen/text_normal_size" />
+            </LinearLayout>
+
+            <com.stanny.nearpal.module.letter.func.view.LetterEditView
+                android:id="@+id/tv_read_letter_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="5dp"
+                android:text="    从明天起，做一个幸福的人喂马，劈柴，周游世界。从明天起，关心粮食和蔬菜。\n    我有一所房子，面朝大海，春暖花开。从明天起，和每一个亲人通信。告诉他们我的幸福。那幸福的闪电告诉我的。我将告诉每一个人。\n    给每一条河每一座山取一个温暖的名字。陌生人，我也为你祝福。\n    愿你有一个灿烂的前程。愿你有情人终成眷属。愿你在尘世获得幸福。\n    我只愿面朝大海，春暖花开\n    从明天起，做一个幸福的人喂马，劈柴，周游世界。从明天起，关心粮食和蔬菜。\n    我有一所房子，面朝大海，春暖花开。从明天起，和每一个亲人通信。告诉他们我的幸福。那幸福的闪电告诉我的。我将告诉每一个人。\n    给每一条河每一座山取一个温暖的名字。陌生人，我也为你祝福。\n    愿你有一个灿烂的前程。愿你有情人终成眷属。愿你在尘世获得幸福。\n    我只愿面朝大海，春暖花开    从明天起，做一个幸福的人喂马，劈柴，周游世界。从明天起，关心粮食和蔬菜。\n    我有一所房子，面朝大海，春暖花开。从明天起，和每一个亲人通信。告诉他们我的幸福。那幸福的闪电告诉我的。我将告诉每一个人。\n    给每一条河每一座山取一个温暖的名字。陌生人，我也为你祝福。\n    愿你有一个灿烂的前程。愿你有情人终成眷属。愿你在尘世获得幸福。\n    我只愿面朝大海，春暖花开\n    从明天起，做一个幸福的人喂马，劈柴，周游世界。从明天起，关心粮食和蔬菜。\n    我有一所房子，面朝大海，春暖花开。从明天起，和每一个亲人通信。告诉他们我的幸福。那幸福的闪电告诉我的。我将告诉每一个人。\n    给每一条河每一座山取一个温暖的名字。陌生人，我也为你祝福。\n    愿你有一个灿烂的前程。愿你有情人终成眷属。愿你在尘世获得幸福。\n    我只愿面朝大海，春暖花开"
+                app:writeable="false" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

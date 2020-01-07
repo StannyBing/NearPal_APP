@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#627d94</color>
+
+    <color name="dialog_bg">#d0ffffff</color>
+    <color name="dialog_shadow">#d0FFF8DC</color>
+    <color name="text_gray">#474747</color>
+
+    <color name="dialog_button_submit">#6495ED</color>
+    <color name="dialog_button_cancel">#d66050</color>
+
+    <color name="letter_blue">#627d94</color>
+    <color name="letter_red">#d35b59</color>
+</resources>

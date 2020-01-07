@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PostCodeView">
+        <attr name="codeText" format="string"/>
+        <attr name="frameWidth" format="dimension"/>
+        <attr name="frameColor" format="color"/>
+        <attr name="codeTextColor" format="color"/>
+        <attr name="codeTextSize" format="dimension"/>
+        <attr name="frameSpace" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="UnderlineTextView">
+        <attr name="lineColor" format="color"/>
+        <attr name="withIndent" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="LetterEditView">
+        <attr name="writeable" format="boolean"/>
+    </declare-styleable>
+</resources>

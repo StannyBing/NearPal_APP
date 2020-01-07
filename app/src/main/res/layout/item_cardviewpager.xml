@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="wrap_content"
+    android:layout_height="230dp"
+    android:layout_gravity="center"
+    android:clipChildren="false"
+    app:cardCornerRadius="5dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/letter_bg"
+        android:orientation="vertical">
+
+        <com.stanny.nearpal.module.letter.func.view.PostCodeView
+            android:id="@+id/pcv_card_postcode"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:codeText="894561"
+            app:codeTextColor="@color/letter_red"
+            app:codeTextSize="5sp"
+            app:frameColor="@color/letter_blue"
+            app:frameSpace="1dp"
+            app:frameWidth="12dp" />
+
+        <ImageView
+            android:id="@+id/iv_card_stamp"
+            android:layout_width="78dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/letter_stamp" />
+
+        <ImageView
+            android:id="@+id/iv_card_postmark"
+            android:layout_width="42dp"
+            android:layout_height="18dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/letter_postmark" />
+
+        <com.stanny.nearpal.module.letter.func.view.UnderlineTextView
+            android:id="@+id/ultv_card_info"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:minHeight="60dp"
+            android:textColor="@color/letter_blue"
+            android:textSize="@dimen/text_smaller_size"
+            app:lineColor="@color/letter_blue" />
+
+        <ImageView
+            android:id="@+id/iv_card_notread"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="-35dp"
+            android:layout_marginTop="60dp"
+            android:layout_toRightOf="@id/ultv_card_info"
+            android:alpha="0.9"
+            android:background="@drawable/letter_not_read" />
+
+        <LinearLayout
+            android:id="@+id/ll_letter_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_card_fromIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="5dp" />
+
+                <TextView
+                    android:id="@+id/tv_card_fromName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/letter_blue"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_card_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_8f"
+                android:textSize="8sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_letter_random"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ll_letter_user"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:alpha="0.5"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_letter_random"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:background="@drawable/letter_random" />
+
+            <TextView
+                android:id="@+id/tv_letter_random"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="随机信件\n24小时后消失"
+                android:textColor="@color/letter_red"
+                android:textSize="8sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

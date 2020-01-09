@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_qrcode_wx"
+        android:background="@drawable/arcode_wx"
+        android:layout_width="200dp"
+        android:layout_height="200dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_small_size"
+        android:text="长按保存二维码后，通过微信扫码添加楮先生官方微信公众号"
+        android:layout_marginBottom="20dp"/>
+
+</LinearLayout>

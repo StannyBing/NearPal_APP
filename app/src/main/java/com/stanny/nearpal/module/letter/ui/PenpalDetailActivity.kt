@@ -3,6 +3,7 @@ package com.stanny.nearpal.module.letter.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.stanny.nearpal.R
 import com.stanny.nearpal.base.BaseActivity
 import com.stanny.nearpal.base.setHead
@@ -55,6 +56,10 @@ class PenpalDetailActivity : BaseActivity<PenpalDetailPresenter, PenpalDetailMod
             LetterFragment.newInstance().apply { letterFragment = this },
             R.id.fm_letter
         )
+
+        if (intent.getIntExtra("userid", 0) == 1 || intent.getIntExtra("userid", 0) == 1) {
+            ttv_penpal_forget.visibility = View.GONE
+        }
 
         super.initView(savedInstanceState)
     }

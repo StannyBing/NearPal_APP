@@ -17,6 +17,7 @@ interface MainContract {
         fun onLetterListResult(letterList : List<LetterBean>)
 
         fun onPenpalListResult(userList : List<UserBean>)
+
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
@@ -24,6 +25,7 @@ interface MainContract {
         fun letterListData() : Observable<List<LetterBean>>
 
         fun penpalListData() : Observable<List<UserBean>>
+
     }
 
     //方法
@@ -31,6 +33,7 @@ interface MainContract {
         abstract fun getAcceptLetters()
 
         abstract fun getPenpalList()
+
     }
 }
 

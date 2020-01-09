@@ -54,4 +54,10 @@ interface ApiService {
 
     @POST("letter/deleteLetter")
     fun deleteLetter(@QueryMap map: Map<String, String>): Observable<BaseRespose<Any>>
+
+    @POST("feedback/addFeedBack")
+    fun addFeedBack(@QueryMap map: Map<String, String>): Observable<BaseRespose<Any>>
+
+    @GET("user/getMyInfo")
+    fun getMyInfo(@QueryMap map: Map<String, String>): Observable<BaseRespose<UserBean>>
 }

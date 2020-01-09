@@ -3,7 +3,6 @@ package com.stanny.nearpal.module.system.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import cn.jpush.android.api.JPushInterface
 import com.stanny.nearpal.R
 import com.stanny.nearpal.base.BaseActivity
 import com.stanny.nearpal.base.UserManager
@@ -14,6 +13,8 @@ import com.stanny.nearpal.module.system.bean.UserBean
 import com.stanny.nearpal.module.system.mvp.contract.SplashContract
 import com.stanny.nearpal.module.system.mvp.model.SplashModel
 import com.stanny.nearpal.module.system.mvp.presenter.SplashPresenter
+import com.umeng.message.IUmengCallback
+import com.umeng.message.PushAgent
 import kotlinx.android.synthetic.main.activity_splash.*
 
 
@@ -54,7 +55,12 @@ class SplashActivity : BaseActivity<SplashPresenter, SplashModel>(), SplashContr
 
     override fun onResume() {
         super.onResume()
-        JPushInterface.stopPush(this)
+        PushAgent.getInstance(this).disable(object : IUmengCallback{
+            override fun onSuccess() {
+            }
+            override fun onFailure(p0: String?, p1: String?) {
+            }
+        })
         handler.postDelayed({
             if (UserManager.user?.logintype == 0 && UserManager.userName.isNotEmpty() && UserManager.passWord.isNotEmpty()) {
                 mPresenter.loginApp(hashMapOf("username" to UserManager.userName, "password" to UserManager.passWord).toJson())
@@ -79,7 +85,6 @@ class SplashActivity : BaseActivity<SplashPresenter, SplashModel>(), SplashContr
             LoginActivity.startAction(this, true)
         } else {
             UserManager.user = userBean
-            showToast("登录成功")
             MainActivity.startAction(this, true)
         }
     }

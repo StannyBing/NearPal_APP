@@ -7,23 +7,26 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import cn.jpush.android.api.JPushInterface
-import com.stanny.nearpal.BuildConfig
+import androidx.recyclerview.widget.RecyclerView
 import com.stanny.nearpal.R
 import com.stanny.nearpal.base.BaseActivity
 import com.stanny.nearpal.base.UserManager
 import com.stanny.nearpal.module.letter.bean.LetterBean
 import com.stanny.nearpal.module.letter.func.adapter.PenpalAdapter
+import com.stanny.nearpal.module.letter.func.adapter.SaveLetterAdapter
 import com.stanny.nearpal.module.letter.mvp.contract.MainContract
 import com.stanny.nearpal.module.letter.mvp.model.MainModel
 import com.stanny.nearpal.module.letter.mvp.presenter.MainPresenter
 import com.stanny.nearpal.module.system.bean.UserBean
 import com.stanny.nearpal.module.system.ui.MenuFragment
-import com.tencent.bugly.crashreport.CrashReport
+import com.umeng.message.IUmengCallback
+import com.umeng.message.PushAgent
 import com.zx.bui.ui.buidialog.BUIDialog
 import com.zx.zxutils.util.ZXFragmentUtil
+import com.zx.zxutils.util.ZXLogUtil
 import com.zx.zxutils.views.SlidingLayout.ZXSlidingRootNav
 import com.zx.zxutils.views.SlidingLayout.ZXSlidingRootNavBuilder
 import kotlinx.android.synthetic.main.activity_main.*
@@ -41,6 +44,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
     private var slidingBuilder: ZXSlidingRootNav? = null//侧边栏
 
     private lateinit var letterFragment: LetterFragment
+    private lateinit var menuFragment: MenuFragment
 
     companion object {
         /**
@@ -62,88 +66,87 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        JPushInterface.resumePush(this)
-        JPushInterface.setAlias(this, 0, UserManager.user!!.id.toString())
+        PushAgent.getInstance(applicationContext).enable(object : IUmengCallback{
+            override fun onSuccess() {
+            }
+            override fun onFailure(p0: String?, p1: String?) {
+            }
+        })
+        PushAgent.getInstance(applicationContext).setAlias(UserManager.user!!.id.toString(), "id") { p0, p1 ->
+            ZXLogUtil.loge("别名注册成功")
+        }
     }
 
     /**
      * 初始化
      */
     override fun initView(savedInstanceState: Bundle?) {
-        try {
-            val notificationEnable = NotificationManagerCompat.from(this).areNotificationsEnabled()
-            if (!notificationEnable) {
-                BUIDialog.showInfo(this,
-                    "提示",
-                    "未开启通知权限，需要实时接收来信通知（PS：我真没广告）",
-                    BUIDialog.BtnBuilder().withCancelBtn()
-                        .withSubmitBtn {
-                            val intent = Intent().apply {
-                                if (Build.VERSION.SDK_INT >= 9) {
-                                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                    action = "android.settings.APPLICATION_DETAILS_SETTINGS"
-                                    data = Uri.fromParts("package", packageName, null)
-                                } else {
-                                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                    action = Intent.ACTION_VIEW
-                                    setClassName(
-                                        "com.android.settings",
-                                        "com.android.settings.InstalledAppDetails"
-                                    )
-                                    putExtra("com.android.settings.ApplicationPkgName", packageName)
-                                }
-                            }
-                            this@MainActivity.startActivity(intent)
-                        })
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        checkNotifyPermission()
 
         ZXFragmentUtil.addFragment(
-            supportFragmentManager,
-            LetterFragment.newInstance().apply { letterFragment = this },
-            R.id.fm_letter
+                supportFragmentManager,
+                LetterFragment.newInstance().apply { letterFragment = this },
+                R.id.fm_letter
         )
         ZXFragmentUtil.addFragment(
-            supportFragmentManager,
-            MenuFragment.newInstance(),
-            R.id.fl_menu
+                supportFragmentManager,
+                MenuFragment.newInstance().apply { menuFragment = this },
+                R.id.fl_menu
         )
 
         //初始化侧边菜单
         slidingBuilder = ZXSlidingRootNavBuilder(this)
-            .withSavedState(savedInstanceState)
-            .withMenuLayout(R.layout.layout_main_menu)
-            .withMenuOpened(false)
-            .build()
+                .withSavedState(savedInstanceState)
+                .withMenuLayout(R.layout.layout_main_menu)
+                .withMenuOpened(false)
+                .build()
 
         //笔友
         rv_main_penpal.apply {
             layoutManager =
-                LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+                    LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = penpalAdapter
         }
 
+        super.initView(savedInstanceState)
+    }
+
+    private fun checkNotifyPermission() {
         try {
-            if (BuildConfig.ISRELEASE) {
-                CrashReport.setUserId(UserManager.user!!.id.toString())
+            if (mSharedPrefUtil.contains("notifyPermissionCheck") && System.currentTimeMillis() - mSharedPrefUtil.getLong("notifyPermissionCheck") < 1000 * 60 * 60 * 24 * 2) {
+                //两天内不再检测
+                return
             }
-            if (mSharedPrefUtil.getBool("isGetPush")) {
-                val bundle = Bundle()
-                val map = mSharedPrefUtil.getMap<String, String>("jPushBundle")
-                bundle.putString(
-                    JPushInterface.EXTRA_NOTIFICATION_TITLE,
-                    map.get(JPushInterface.EXTRA_NOTIFICATION_TITLE)
-                )
-                bundle.putString(JPushInterface.EXTRA_ALERT, map.get(JPushInterface.EXTRA_ALERT))
-                bundle.putString(JPushInterface.EXTRA_EXTRA, map.get(JPushInterface.EXTRA_EXTRA))
-                mRxManager.post("jPush", bundle)
+            val notificationEnable = NotificationManagerCompat.from(this).areNotificationsEnabled()
+            if (!notificationEnable) {
+                mSharedPrefUtil.putLong("notifyPermissionCheck", System.currentTimeMillis())
+                BUIDialog.showInfo(this,
+                        "提示",
+                        "未开启通知权限，需要实时接收来信通知（PS：我真没广告）",
+                        BUIDialog.BtnBuilder()
+                                .withCancelBtn()
+                                .withSubmitBtn {
+                                    val intent = Intent().apply {
+                                        if (Build.VERSION.SDK_INT >= 9) {
+                                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                            action = "android.settings.APPLICATION_DETAILS_SETTINGS"
+                                            data = Uri.fromParts("package", packageName, null)
+                                        } else {
+                                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                            action = Intent.ACTION_VIEW
+                                            setClassName(
+                                                    "com.android.settings",
+                                                    "com.android.settings.InstalledAppDetails"
+                                            )
+                                            putExtra("com.android.settings.ApplicationPkgName", packageName)
+                                        }
+                                    }
+                                    this@MainActivity.startActivity(intent)
+                                })
             }
         } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        super.initView(savedInstanceState)
     }
 
     fun loadData() {
@@ -163,7 +166,45 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
             return@setOnItemLongClickListener true
         }
         ttv_main_write.setOnClickListener {
-            WriteLetterActivity.startAction(this@MainActivity, false)
+            //如存在暂存信件，提示用户。
+            if (mSharedPrefUtil.getList<LetterBean>("letterList")?.isNotEmpty() == true) {
+                val saveLetter =
+                        LayoutInflater.from(this).inflate(R.layout.layout_save_letter, null)
+                val rvLetter = saveLetter.findViewById<RecyclerView>(R.id.rv_save_letter)
+                val letterList = mSharedPrefUtil.getList<LetterBean>("letterList")
+                val dialog = BUIDialog.showCustom(this, "存在暂存信件", saveLetter, BUIDialog.BtnBuilder()
+                        .withCancelBtn()
+                        .withBtn("继续新建信件", R.color.letter_blue) {
+                            WriteLetterActivity.startAction(this, false)
+                        })
+                val saveLetterAdapter = SaveLetterAdapter(letterList)
+                rvLetter.apply {
+                    layoutManager = LinearLayoutManager(this@MainActivity)
+                    adapter = saveLetterAdapter
+                }
+                saveLetterAdapter.setOnItemClickListener { adapter, view, position ->
+                    WriteLetterActivity.startAction(
+                            this,
+                            false,
+                            letterList[position].acceptuserid,
+                            letterList[position].id
+                    )
+                    dialog.dismiss()
+                }
+                saveLetterAdapter.setOnItemChildClickListener { adapter, view, position ->
+                    if (view.id == R.id.iv_save_delete) {
+                        letterList.removeAt(position)
+                        saveLetterAdapter.notifyDataSetChanged()
+                        mSharedPrefUtil.putList("letterList", letterList)
+                        if (letterList.isEmpty()) {
+                            dialog.dismiss()
+                            onResume()
+                        }
+                    }
+                }
+            } else {
+                WriteLetterActivity.startAction(this, false)
+            }
         }
         iv_main_menu.setOnClickListener {
             slidingBuilder?.openMenu(true)
@@ -193,6 +234,11 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
     override fun onResume() {
         super.onResume()
         loadData()
+        if (mSharedPrefUtil.getList<LetterBean>("letterList")?.isNotEmpty() == true) {
+            ttv_main_write.text = "书(续)"
+        } else {
+            ttv_main_write.text = "书"
+        }
     }
 
     /**
@@ -209,6 +255,11 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
         this.penpalList.clear()
         this.penpalList.addAll(userList)
         penpalAdapter.notifyDataSetChanged()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        menuFragment.onActivityResult(requestCode, resultCode, data)
     }
 
 }

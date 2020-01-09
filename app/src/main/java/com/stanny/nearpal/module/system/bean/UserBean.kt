@@ -12,6 +12,7 @@ data class UserBean(var username: String = "",
                     var birthday: String = "",
                     var logintype: Int = 0,//登录类别 0注册 1微信 2QQ 3微博 4 手机号 5游客
                     var sex: String = "",
-                    var balance: Int = 0,
-                    var headicon : Int = 0) : Serializable {
+                    var balance: Int = 0,//账户余额
+                    var headicon : Int = 0,
+                    var deleteletter : String = "") : Serializable {
 }

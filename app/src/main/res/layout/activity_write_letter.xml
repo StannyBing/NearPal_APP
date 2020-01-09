@@ -71,7 +71,7 @@
                     android:textSize="@dimen/text_normal_size" />
 
                 <EditText
-                    android:id="@+id/et_write_penpal"
+                    android:id="@+id/et_write_call"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:letterSpacing="0.3"
@@ -103,7 +103,7 @@
             </LinearLayout>
 
             <com.stanny.nearpal.module.letter.func.view.LetterEditView
-                android:id="@+id/tv_write_letter_content"
+                android:id="@+id/et_write_letter_content"
                 android:layout_width="match_parent"
                 android:scrollbars="vertical"
                 android:layout_height="match_parent"

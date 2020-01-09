@@ -4,6 +4,7 @@ import com.frame.zxmvp.baserx.RxHelper
 import com.frame.zxmvp.baserx.RxSubscriber
 import com.stanny.nearpal.module.system.bean.UserBean
 import com.stanny.nearpal.module.system.mvp.contract.LoginContract
+import com.zx.zxutils.util.ZXLogUtil
 import okhttp3.RequestBody
 
 
@@ -17,6 +18,7 @@ class LoginPresenter : LoginContract.Presenter() {
             .compose(RxHelper.bindToLifecycle(mView))
             .subscribe(object : RxSubscriber<UserBean>(mView) {
                 override fun _onNext(t: UserBean?) {
+                    ZXLogUtil.loge("来这了")
                     if (t != null) {
                         mView.onLoginResult(t)
                     }

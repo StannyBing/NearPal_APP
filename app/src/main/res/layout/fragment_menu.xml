@@ -33,6 +33,35 @@
                 android:text="我是一阵风"
                 android:textSize="22sp"
                 android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的楮豆豆："
+                    android:textSize="@dimen/text_normal_size" />
+
+                <TextView
+                    android:id="@+id/tv_menu_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textColor="@color/letter_blue"
+                    android:textSize="@dimen/text_normal_size" />
+
+                <ImageView
+                    android:id="@+id/iv_menu_balanceTips"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/menu_tips"
+                    android:padding="8dp"
+                    android:textSize="@dimen/text_normal_size" />
+            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -43,7 +72,7 @@
             android:id="@+id/rv_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="30dp" />
     </LinearLayout>
 
     <View

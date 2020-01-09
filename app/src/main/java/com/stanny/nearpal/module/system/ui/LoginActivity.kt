@@ -130,7 +130,6 @@ class LoginActivity : BaseActivity<LoginPresenter, LoginModel>(), LoginContract.
         UserManager.user = userBean
         UserManager.userName = et_login_username.text.toString()
         UserManager.passWord = ZXMD5Util.getMD5(et_login_password.text.toString())
-        showToast("登录成功")
         MainActivity.startAction(this, false)
     }
 

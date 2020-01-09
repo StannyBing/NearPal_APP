@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/et_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:hint="请输入您对楮先生的意见，我会积极改进"
+        android:textSize="@dimen/text_normal_size"
+        android:gravity="top"
+        android:padding="10dp"
+        android:maxLength="255"
+        android:background="@drawable/shape_edit_normal"
+        android:layout_margin="5dp"/>
+
+</LinearLayout>

@@ -14,6 +14,8 @@ import com.stanny.nearpal.module.letter.ui.MainActivity
 import com.stanny.nearpal.module.system.ui.LoginActivity
 import com.stanny.nearpal.module.system.ui.RegisterActivity
 import com.stanny.nearpal.module.system.ui.SplashActivity
+import com.umeng.analytics.MobclickAgent
+import com.umeng.message.PushAgent
 import com.zx.bui.ui.buidialog.BUIDialog
 import com.zx.zxutils.util.*
 import com.zx.zxutils.views.ZXStatusBarCompat
@@ -41,6 +43,7 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
         ZXCrashUtil.init(BuildConfig.ISRELEASE) { t, e ->
             showToast("出现未知问题，请稍后再试")
         }
+        PushAgent.getInstance(this).onAppStart()
 
         mRxManager.on("jPush", Action1<Bundle> {
             try {
@@ -139,6 +142,16 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
         } else {
             showToast("未获取到系统权限，请先在设置中开启相应权限！")
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        MobclickAgent.onResume(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        MobclickAgent.onPause(this)
     }
 
 }

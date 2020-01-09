@@ -5,6 +5,18 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+
+    signingConfigs {
+        sign {
+            keyAlias 'nearpal'
+            keyPassword '123456'
+            storeFile file('F:/keystore/stanny.jks')
+            storePassword '123456'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.stanny.nearpal"
@@ -14,17 +26,14 @@ android {
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-
-        manifestPlaceholders = [
-                JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "b6d1cc036ae756e2e1471ed1",
-                JPUSH_CHANNEL: "developer-default",
-        ]
-
+        // 添加一个默认渠道号
+        manifestPlaceholders=[UMENG_CHANNEL_VALUE: "umeng"]
+        flavorDimensions "versionCode"
         ndk {
             //设置支持的SO库架构
             abiFilters 'armeabi'//, 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
+        signingConfig signingConfigs.sign
 
         lintOptions {
             abortOnError false
@@ -49,7 +58,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             buildConfigField "boolean", "ISRELEASE", "true"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -61,9 +70,37 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             if (!variant.buildType.debuggable) {
-                outputFileName = "楮先生_" + getTime() + "_" + defaultConfig.versionName + ".apk"
+                outputFileName = "楮先生_" + variant.productFlavors[0].name + "_" + getTime() + "_" + defaultConfig.versionName + ".apk"
             }
         }
+    }
+
+    productFlavors {
+        Tencent {
+            //投放应用宝市场
+        }
+        XiaoMi {
+            //投放小米市场
+        }
+        Vivo {
+            //投放Vivo市场
+        }
+        Baidu {
+            //投放百度市场
+        }
+        Oppo {
+            //投放Oppo市场
+        }
+        HuaWei {
+            //投放华为市场
+        }
+        WanDouJia {
+            //投放豌豆荚市场
+        }
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE : name]
     }
 }
 
@@ -90,8 +127,14 @@ dependencies {
     implementation project(path: ':zxmvp')
     implementation 'me.jessyan:autosize:1.1.2'
 
-    implementation 'cn.jiguang.sdk:jpush:3.2.0'
-    implementation 'cn.jiguang.sdk:jcore:1.2.7'
+    //PushSDK必须依赖基础组件库，所以需要加入对应依赖
+    implementation 'com.umeng.umsdk:common:2.1.0'
+    //PushSDK必须依赖utdid库，所以需要加入对应依赖
+    implementation 'com.umeng.umsdk:utdid:1.1.5.3'
+    //PushSDK
+    implementation 'com.umeng.umsdk:push:6.0.1'
+    //AnalyticsSDK
+    implementation 'com.umeng.umsdk:analytics:8.0.0'
 
 //    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
 }
